@@ -3,9 +3,11 @@ from telegram.ext import *
 # import telegram as tele
 import stockprice as stock_price
 from telegram import ParseMode
+import os
 from os import environ
 
 print("Bot has started")
+PORT = int(os.environ.get('PORT', 5000))
 
 
 def start_command(update, context):
@@ -52,7 +54,13 @@ def main():
 
     dp.add_error_handler(error)
 
-    updater.start_polling()
+    # updater.start_polling()
+    updater.start_webhook(listen="0.0.0.0",
+                          port=int(PORT),
+                          url_path=environ['API_KEY'])
+    updater.bot.setWebhook(
+        'https://stock-price-analysis-bot.herokuappname.com/'+environ['API_KEY'])
+
     updater.idle()
 
 
