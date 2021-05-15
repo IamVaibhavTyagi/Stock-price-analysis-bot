@@ -22,28 +22,29 @@ def nsestockprice(symbol, update, context, series='EQ',):
         symbol = symbol.replace('&', '%26')
 
     try:
-
+        print("1")
         nse.liveurls.quote_eq_url.session.headers.update(
             {'Referer': eq_quote_referer.format(symbol)})
         res = nse.liveurls.quote_eq_url(symbol, series)
-
+        print("2")
         html_soup = BeautifulSoup(res.text, 'lxml')
         hresponseDiv = html_soup.find("div", {"id": "responseDiv"})
-
+        print("3")
         d = json.loads(hresponseDiv.get_text())
-
+        print("4")
         result = d['data'][0]
         # print(result)
         if result['lastPrice'] >= result['previousClose']:
             Response = f"<b>--Stock Data--</b>\n <i>{result['companyName']} - {result['symbol']}</i>\n<b>PreviousClose : </b> ₹{result['previousClose']} \n<b>OpenPrice :</b> ₹{result['open']} \n<b>DayHigh :</b> ₹{result['dayHigh']}\n<b>DayLow :</b> ₹{result['dayLow']} \n<b>LastPrice :</b> ₹{result['lastPrice']}\n<b>Change :</b> ₹{result['change']} \n<b>Change % :</b> {result['pChange']} %  " + u"\u2B06"+" "+u"\u2705"
             update.message.reply_text(Response, parse_mode='HTML')
+            print("5")
             stock_analysis(symbol, update, context)
         else:
             Response = f"<b>--Stock Data--</b>\n <i>{result['companyName']} - {result['symbol']}</i>\n<b>PreviousClose : </b> ₹{result['previousClose']} \n<b>OpenPrice :</b> ₹{result['open']} \n<b>DayHigh :</b> ₹{result['dayHigh']}\n<b>DayLow :</b> ₹{result['dayLow']} \n<b>LastPrice :</b> ₹{result['lastPrice']}\n<b>Change :</b> ₹{result['change']} \n<b>Change % :</b> {result['pChange']} %  " + u"\u2B07"+" "+u"\U0001F6D1"
             update.message.reply_text(Response, parse_mode='HTML')
+            print("6")
             stock_analysis(symbol, update, context)
-    except Exception as e:
-        print(e)
+    except:
         update.message.reply_text(
             "Sorry,couldn't find the stock! Please check the spelling.", parse_mode='HTML')
 
