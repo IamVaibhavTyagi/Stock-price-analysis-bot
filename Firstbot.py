@@ -59,7 +59,7 @@ def main():
                           port=int(PORT),
                           url_path=environ['API_KEY'])
     updater.bot.setWebhook(
-        'https://stock-price-analysis-bot.herokuappname.com/'+environ['API_KEY'])
+        'https://polar-meadow-55829.herokuapp.com/'+environ['API_KEY'])
 
     updater.idle()
 
