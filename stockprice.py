@@ -26,8 +26,9 @@ def nsestockprice(symbol, update, context, series='EQ',):
         print(symbol)
         nse.liveurls.quote_eq_url.session.headers.update(
             {'Referer': eq_quote_referer.format(symbol)})
-        res = nse.liveurls.quote_eq_url(symbol, series)
         print("2")
+        res = nse.liveurls.quote_eq_url(symbol, series)
+
         html_soup = BeautifulSoup(res.text, 'lxml')
         hresponseDiv = html_soup.find("div", {"id": "responseDiv"})
         print("3")
