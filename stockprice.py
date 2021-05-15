@@ -42,7 +42,7 @@ def nsestockprice(symbol, update, context, series='EQ',):
             Response = f"<b>--Stock Data--</b>\n <i>{result['companyName']} - {result['symbol']}</i>\n<b>PreviousClose : </b> ₹{result['previousClose']} \n<b>OpenPrice :</b> ₹{result['open']} \n<b>DayHigh :</b> ₹{result['dayHigh']}\n<b>DayLow :</b> ₹{result['dayLow']} \n<b>LastPrice :</b> ₹{result['lastPrice']}\n<b>Change :</b> ₹{result['change']} \n<b>Change % :</b> {result['pChange']} %  " + u"\u2B07"+" "+u"\U0001F6D1"
             update.message.reply_text(Response, parse_mode='HTML')
             stock_analysis(symbol, update, context)
-    except exception as e:
+    except Exception as e:
         print(e)
         update.message.reply_text(
             "Sorry,couldn't find the stock! Please check the spelling.", parse_mode='HTML')
@@ -159,10 +159,10 @@ def send_graph(update, context, caption):
     os.remove("squares.png")
 
 
-symbol = input("Enter the stock symbol:")
-stock_analysis(symbol)
+# symbol = input("Enter the stock symbol:")
+# stock_analysis(symbol)
 # stock_list = []
-print(nsestockprice(symbol))
+# print(nsestockprice(symbol))
 # # stock_list.append(nsestockprice(symbol))
 # # print(stock_list)
 # # print(stock_list.append(nsestockprice(symbol)))
