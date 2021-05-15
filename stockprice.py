@@ -23,6 +23,7 @@ def nsestockprice(symbol, update, context, series='EQ',):
 
     try:
         print("1")
+        print(symbol)
         nse.liveurls.quote_eq_url.session.headers.update(
             {'Referer': eq_quote_referer.format(symbol)})
         res = nse.liveurls.quote_eq_url(symbol, series)
