@@ -7,7 +7,7 @@ import os
 from os import environ
 
 print("Bot has started")
-PORT = int(os.environ.get('PORT', 5000))
+PORT = int(os.environ.get('PORT', '8443'))
 
 
 def start_command(update, context):
@@ -56,10 +56,10 @@ def main():
 
     # updater.start_polling()
     updater.start_webhook(listen="0.0.0.0",
-                          port=int(PORT),
-                          url_path=environ['API_KEY'])
-    updater.bot.setWebhook(
-        'https://stock-price-analysis-bot.herokuapp.com/'+environ['API_KEY'])
+                          port=PORT,
+                          url_path=environ['API_KEY']), webhook_url = f"https://stock-price-analysis-bot.herokuapp.com/{environ['API_KEY']}"
+    # updater.bot.setWebhook(
+    #    'https://stock-price-analysis-bot.herokuapp.com/'+environ['API_KEY'])
 
     updater.idle()
 
