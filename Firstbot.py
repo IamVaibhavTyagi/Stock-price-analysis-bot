@@ -6,7 +6,7 @@ from telegram import ParseMode
 import os
 from os import environ
 
-print("Bot has started")
+
 PORT = int(os.environ.get('PORT', '8443'))
 
 
@@ -26,6 +26,7 @@ def help_command(update, context):
 
 
 def handle_message(update, context):
+    print("Bot inside handle message ")
     text = str(update.message.text).lower()
 
     stock_price.nsestockprice(text, update, context)
@@ -43,6 +44,7 @@ def error(update, context):
 
 
 def main():
+    print("Bot has started")
     updater = Updater(environ['API_KEY'])
 
     dp = updater.dispatcher
@@ -55,6 +57,7 @@ def main():
     dp.add_error_handler(error)
 
     # updater.start_polling()
+    print("Bot webhook")
     updater.start_webhook(
         listen="0.0.0.0",
         port=PORT,
@@ -62,7 +65,7 @@ def main():
         webhook_url=f"https://stock-price-analysis-bot.herokuapp.com/" +
         environ['API_KEY'])
     # updater.bot.setWebhook('https://stock-price-analysis-bot.herokuapp.com/'+environ['API_KEY'])
-
+    print("Bot webhook end")
     updater.idle()
 
 
