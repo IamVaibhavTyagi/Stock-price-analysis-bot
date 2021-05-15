@@ -32,7 +32,7 @@ def nsestockprice(symbol, update, context, series='EQ',):
         d = json.loads(hresponseDiv.get_text())
 
         result = d['data'][0]
-        # print(result)
+
         if result['lastPrice'] >= result['previousClose']:
             Response = f"<b>--Stock Data--</b>\n <i>{result['companyName']} - {result['symbol']}</i>\n<b>PreviousClose : </b> ₹{result['previousClose']} \n<b>OpenPrice :</b> ₹{result['open']} \n<b>DayHigh :</b> ₹{result['dayHigh']}\n<b>DayLow :</b> ₹{result['dayLow']} \n<b>LastPrice :</b> ₹{result['lastPrice']}\n<b>Change :</b> ₹{result['change']} \n<b>Change % :</b> {result['pChange']} %  " + u"\u2B06"+" "+u"\u2705"
             update.message.reply_text(Response, parse_mode='HTML')
@@ -56,10 +56,9 @@ def stock_analysis(symbol, update, context):
         symbol=symbol, start=month_ago_date, end=today_date))
 
     # ------------------------------ Simple moving average code----------------------------
-    # print(df.columns)
-    # print(df.index)
+
     df['MA'] = ta.SMA(df['Close'], timeperiod=14)
-    # print(df.head())
+
     plt.figure(figsize=(20, 12))
     plt.plot(df.index, df['Close'], color='skyblue',
              linewidth=2, label='Close price')
@@ -88,30 +87,13 @@ def stock_analysis(symbol, update, context):
     ax2.axhline(y=70, color="green", linewidth=1, linestyle="--")
     ax2.set_xlabel('Date')
     ax2.set_ylabel('RSI')
-
-    # ax2.set_title('Relative Strength Index(RSI)')
     ax2.legend()
 
     ax1.plot(df.index, df['Close'], color='Orange',
              linewidth=2, label='Close Price')
-
-    # ax1.set_xlabel('Date')
     ax1.set_ylabel('Close Price')
     ax1.set_title('Relative Strength Index(RSI)')
-
     ax1.legend()
-
-    # plt.subplot(4, 1, 1)
-    # plt.plot(df.index, df['Relative'], color='Orange',
-    #          linewidth=2, label='RSI')
-
-    # plt.figure(figsize=(20, 12))
-    # plt.subplot(4, 1, 2)
-    # plt.plot(df.index, df['Close'], color='Orange',
-    #          linewidth=2, label='Close')
-    # plt.tight_layout()
-    # plt.show()
-    # plt.show()
 
     fig.savefig('squares.png')
 
@@ -122,7 +104,7 @@ def stock_analysis(symbol, update, context):
 
     df['up_band'], df['mid_band'], df['low_band'] = ta.BBANDS(
         df['Close'], timeperiod=14)
-    # print(df.head())
+
     plt.figure(figsize=(20, 12))
     plt.plot(df.index, df['Close'], color='skyblue',
              linewidth=2, label='Close Price')
@@ -154,14 +136,5 @@ def send_graph(update, context, caption):
     with open(image_path, "rb") as image_file:
         ret = requests.post(url, data=data, files={
             "photo": image_file})
-    # print(ret.json())
+
     os.remove("squares.png")
-
-
-# symbol = input("Enter the stock symbol:")
-# stock_analysis(symbol)
-# stock_list = []
-# print(nsestockprice(symbol))
-# # stock_list.append(nsestockprice(symbol))
-# # print(stock_list)
-# # print(stock_list.append(nsestockprice(symbol)))
