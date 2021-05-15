@@ -1,13 +1,12 @@
 from bs4.builder import HTML
 from telegram.ext import *
-# import telegram as tele
 import stockprice as stock_price
 from telegram import ParseMode
 import os
-from os import environ
+from dotenv import load_dotenv
 
-
-PORT = int(os.environ.get('PORT', '8443'))
+load_dotenv()
+print("Bot has started")
 
 
 def start_command(update, context):
@@ -26,7 +25,6 @@ def help_command(update, context):
 
 
 def handle_message(update, context):
-    print("Bot inside handle message ")
     text = str(update.message.text).lower()
 
     stock_price.nsestockprice(text, update, context)
@@ -44,8 +42,9 @@ def error(update, context):
 
 
 def main():
-    print("Bot has started")
-    updater = Updater(environ['API_KEY'])
+    TOKEN = os.getenv('API_KEY')
+
+    updater = Updater(f"{TOKEN}")
 
     dp = updater.dispatcher
 
@@ -56,16 +55,7 @@ def main():
 
     dp.add_error_handler(error)
 
-    # updater.start_polling()
-    print("Bot webhook")
-    updater.start_webhook(
-        listen="0.0.0.0",
-        port=PORT,
-        url_path=environ['API_KEY'],
-        webhook_url=f"https://stock-price-analysis-bot.herokuapp.com/" +
-        environ['API_KEY'])
-    # updater.bot.setWebhook('https://stock-price-analysis-bot.herokuapp.com/'+environ['API_KEY'])
-    print("Bot webhook end")
+    updater.start_polling()
     updater.idle()
 
 

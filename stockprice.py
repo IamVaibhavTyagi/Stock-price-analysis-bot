@@ -1,4 +1,3 @@
-from logging import exception
 import pandas as pd
 import nsepy as nse
 import requests
@@ -15,38 +14,35 @@ from bs4 import BeautifulSoup
 import json
 
 
-def nsestockprice(symbol, update, context, series='EQ'):
+def nsestockprice(symbol, update, context, series='EQ',):
 
     eq_quote_referer = "https://www1.nseindia.com/live_market/dynaContent/live_watch/get_quote/GetQuote.jsp?symbol={}&illiquid=0&smeFlag=0&itpFlag=0"
     if '&' in symbol:
         symbol = symbol.replace('&', '%26')
 
     try:
-        print("1")
-        print(symbol)
+
         nse.liveurls.quote_eq_url.session.headers.update(
             {'Referer': eq_quote_referer.format(symbol)})
-        print("2")
         res = nse.liveurls.quote_eq_url(symbol, series)
 
         html_soup = BeautifulSoup(res.text, 'lxml')
         hresponseDiv = html_soup.find("div", {"id": "responseDiv"})
-        print("3")
+
         d = json.loads(hresponseDiv.get_text())
-        print("4")
+
         result = d['data'][0]
         # print(result)
         if result['lastPrice'] >= result['previousClose']:
             Response = f"<b>--Stock Data--</b>\n <i>{result['companyName']} - {result['symbol']}</i>\n<b>PreviousClose : </b> ₹{result['previousClose']} \n<b>OpenPrice :</b> ₹{result['open']} \n<b>DayHigh :</b> ₹{result['dayHigh']}\n<b>DayLow :</b> ₹{result['dayLow']} \n<b>LastPrice :</b> ₹{result['lastPrice']}\n<b>Change :</b> ₹{result['change']} \n<b>Change % :</b> {result['pChange']} %  " + u"\u2B06"+" "+u"\u2705"
             update.message.reply_text(Response, parse_mode='HTML')
-            print("5")
             stock_analysis(symbol, update, context)
         else:
             Response = f"<b>--Stock Data--</b>\n <i>{result['companyName']} - {result['symbol']}</i>\n<b>PreviousClose : </b> ₹{result['previousClose']} \n<b>OpenPrice :</b> ₹{result['open']} \n<b>DayHigh :</b> ₹{result['dayHigh']}\n<b>DayLow :</b> ₹{result['dayLow']} \n<b>LastPrice :</b> ₹{result['lastPrice']}\n<b>Change :</b> ₹{result['change']} \n<b>Change % :</b> {result['pChange']} %  " + u"\u2B07"+" "+u"\U0001F6D1"
             update.message.reply_text(Response, parse_mode='HTML')
-            print("6")
             stock_analysis(symbol, update, context)
     except:
+
         update.message.reply_text(
             "Sorry,couldn't find the stock! Please check the spelling.", parse_mode='HTML')
 
