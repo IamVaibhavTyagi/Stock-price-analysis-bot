@@ -1,1 +1,1 @@
-worker: python Firstbot.py
+web: python Firstbot.py
