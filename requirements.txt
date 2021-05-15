@@ -96,7 +96,6 @@ six==1.15.0
 sniffio==1.2.0
 soupsieve==2.2.1
 starlette==0.14.2
-TA-Lib @ file:///C:/Users/vishu/Downloads/TA_Lib-0.4.19-cp37-cp37m-win_amd64.whl
 terminado==0.9.4
 testpath==0.4.4
 toml==0.10.1
