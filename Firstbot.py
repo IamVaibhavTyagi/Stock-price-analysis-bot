@@ -59,9 +59,10 @@ def main():
     # updater.start_polling()
     print("Bot webhook")
     updater.start_webhook(
-        listen="0.0.0.0",
-        port=PORT,
-        url_path=environ['API_KEY'],
+        listen="127.0.0.1",
+        port=5000,
+        url_path='1623484772:AAHhq7rZ7G0nj3-QGZLwZvP3f0_csu9W5qA',
+        # environ['API_KEY'],
         webhook_url=f"https://stock-price-analysis-bot.herokuapp.com/" +
         environ['API_KEY'])
     # updater.bot.setWebhook('https://stock-price-analysis-bot.herokuapp.com/'+environ['API_KEY'])
