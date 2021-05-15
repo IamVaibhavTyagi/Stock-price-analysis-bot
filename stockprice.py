@@ -15,7 +15,7 @@ from bs4 import BeautifulSoup
 import json
 
 
-def nsestockprice(symbol, update, context, series='EQ',):
+def nsestockprice(symbol, update, context, series='EQ'):
 
     eq_quote_referer = "https://www1.nseindia.com/live_market/dynaContent/live_watch/get_quote/GetQuote.jsp?symbol={}&illiquid=0&smeFlag=0&itpFlag=0"
     if '&' in symbol:
